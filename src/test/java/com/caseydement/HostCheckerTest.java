@@ -20,6 +20,8 @@ public class HostCheckerTest {
             hostChecker.addHost(line);
         });
 
+        long start = System.nanoTime();
+
         Stream<String> goodHostStream = Files.lines(Path.of(ClassLoader.getSystemResource("goodhosts.csv").toURI()));
         goodHostStream.forEach(line -> {
             assertTrue(hostChecker.matchHost(line));
@@ -30,6 +32,11 @@ public class HostCheckerTest {
             assertFalse(hostChecker.matchHost(line));
         });
 
-        System.out.println(hostChecker.stepsPerRun());
+        long finish = System.nanoTime();
+        long elapsed = finish - start;
+        float rate = (float) elapsed / (float) hostChecker.getNumRuns();
+
+        System.out.println("Averaged " + hostChecker.stepsPerRun() + " comparisons per lookup");
+        System.out.println("Executed " + hostChecker.getNumRuns() + " lookups in " + elapsed + " nanoseconds (" + rate + "ns/lookup)");
     }
 }

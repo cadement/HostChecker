@@ -92,5 +92,9 @@ public class HostChecker {
     public float stepsPerRun() {
         return (float) NUM_MATCH_STEPS / (float) NUM_MATCH_RUNS;
     }
+
+    public int getNumRuns() {
+        return NUM_MATCH_RUNS;
+    }
 }
 
